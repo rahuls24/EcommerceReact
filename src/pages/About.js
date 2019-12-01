@@ -8,20 +8,19 @@
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 //import { useStaticQuery, graphql } from "gatsby"
-import Footer from "./reuseable/Footer"
-import Navbar from "./reuseable/Navbar"
-import Img from "gatsby-image"
+import Footer from "../components/reuseable/Footer"
+import Navbar from "../components/reuseable/Navbar"
+//import Img from "gatsby-image"
 import { StaticQuery, graphql } from "gatsby"
-import "./bootstrap.min.css"
+import "../components/bootstrap.min.css"
 import MyHero from "../components/reuseable/MyHero"
 import MyHeading from "../components/reuseable/MyHeading"
 import InfoBlock from "../components/reuseable/InfoBlock"
 import DualInfoBlock from "../components/reuseable/DualInfoBlock"
-import Coursecart from "../components/cart/Coursecart"
 
-import "./layout.css"
+import "../components/layout.css"
 
-const Layout = ({ children }) => (
+const About = ({ children }) => (
   <>
     <Navbar />
     {children}
@@ -35,53 +34,33 @@ const Layout = ({ children }) => (
             subtitle="subtitle"
             heroClass="hero-bcg"
           />
-          <InfoBlock heading="About Us" />
-          <Coursecart courses={data.courses} />
-
-          <DualInfoBlock
-            heading="Our Team"
-            imgSrc="https://i.ibb.co/RbYxVRv/pexels-photo-1261427.jpg"
-          />
         </Fragment>
       )}
+    />
+    <InfoBlock heading="About Us" />
+    <DualInfoBlock
+      heading="Our Team"
+      imgSrc="https://i.ibb.co/RbYxVRv/pexels-photo-1261427.jpg"
     />
 
     <Footer />
   </>
 )
 
-Layout.propTypes = {
+About.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
 const query = graphql`
-  {
-    bgImg: file(relativePath: { eq: "heromain.png" }) {
+  query {
+    bgImg: file(relativePath: { eq: "about.png" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid
         }
       }
     }
-    courses: allContentfulCourses {
-      edges {
-        node {
-          id
-          title
-          price
-          category
-          description {
-            description
-          }
-          image {
-            fixed(width: 200, height: 120) {
-              ...GatsbyContentfulFixed_tracedSVG
-            }
-          }
-        }
-      }
-    }
   }
 `
 
-export default Layout
+export default About
